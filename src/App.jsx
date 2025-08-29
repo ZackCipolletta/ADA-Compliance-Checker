@@ -4,12 +4,11 @@ import './App.css';
 function App() {
   const [textInput, setTextInput] = useState('');
 
-  const userInput = document.getElementById('userInput');
-  const userInputValue = userInput ? userInput.value : '';
+  // const userInputValue = userInput ? userInput.value : '';
 
   const checkForUserInput = () => {
-    if (userInput) {
-      console.log(userInput.value);
+    if (textInput.trim()) {
+      console.log(userInput.value.trim());
     } else {
       console.log("userInput has no value");
     }
@@ -24,6 +23,7 @@ function App() {
       <div>
         <textarea
           id='userInput'
+          value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
         >
 
