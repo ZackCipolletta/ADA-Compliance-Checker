@@ -3,19 +3,19 @@ import './App.css';
 
 function App() {
   const [textInput, setTextInput] = useState('');
-
-  // const userInputValue = userInput ? userInput.value : '';
+  const [noTextInputMessage, setNoTextInputMessage] = useState('');
 
   const checkForUserInput = () => {
-    if (textInput.trim()) {
-      console.log(userInput.value.trim());
+    const trimText = textInput.trim();
+    if (trimText) {
+      return displayMessage(trimText);
     } else {
-      console.log("userInput has no value");
+      return displayMessage("userInput has no value");
     }
   };
 
-  const logInputText = () => {
-    console.log(userInput);
+  const displayMessage = (message) => {
+    document.getElementById('outputMessage').innerHTML = message;
   };
 
   return (
@@ -26,9 +26,9 @@ function App() {
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
         >
-
         </textarea>
       </div>
+      <div id='outputMessage' ></div>
       <div className="card">
         <button onClick={() => checkForUserInput()}>
           count is
