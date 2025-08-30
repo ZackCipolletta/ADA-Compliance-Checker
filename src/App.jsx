@@ -6,8 +6,8 @@ function App() {
   const [noTextInputMessage, setNoTextInputMessage] = useState('');
 
   const checkForUserInput = () => {
-    const trimText = textInput.trim();
-    if (trimText) {
+    const trimText = textInput.trim(); // trim leading and trailing blank spaces from the textArea
+    if (trimText) { // if the textAra isn't only blank space then call the next function
       return displayMessage(trimText);
     } else {
       return displayMessage("userInput has no value");
@@ -15,11 +15,11 @@ function App() {
   };
 
   const displayMessage = (message) => {
-    const sanitizedMessage = sanitize(message);
+    const sanitizedMessage = sanitize(message); // sanitize the string before calling the next function
       document.getElementById('outputMessage').innerHTML = sanitizedMessage;
   };
 
-  function sanitize(string) {
+  function sanitize(string) { // sanitize the string of user data
     const map = {
       '&': '&amp;',
       '<': '&lt;',
