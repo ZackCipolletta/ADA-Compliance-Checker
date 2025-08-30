@@ -1,5 +1,5 @@
 {
-  "name": "ada-compliance-checker",
+  "name": "ada-compliance-checker-client",
   "private": true,
   "version": "0.0.0",
   "type": "module",
