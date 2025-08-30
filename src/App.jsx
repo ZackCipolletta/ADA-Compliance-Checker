@@ -3,14 +3,13 @@ import './App.css';
 
 function App() {
   const [textInput, setTextInput] = useState('');
-  const [noTextInputMessage, setNoTextInputMessage] = useState('');
 
   const checkForUserInput = () => {
     const trimText = textInput.trim(); // trim leading and trailing blank spaces from the textArea
-    if (trimText) { // if the textAra isn't only blank space then call the next function
+    if (trimText) { // if the textArea isn't only blank space then call the next function
       return displayMessage(trimText);
     } else {
-      return displayMessage("userInput has no value");
+      return displayMessage("userInput has no value"); // if textArea is only blank space, return error
     }
   };
 
