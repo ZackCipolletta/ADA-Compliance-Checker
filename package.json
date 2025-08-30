@@ -1,0 +1,22 @@
+{
+  "name": "ada-compliance-checker",
+  "version": "1.0.0",
+  "description": "ADA Compliance Checker with a React front end and Node.js back end for analyzing HTML accessibility",
+  "private": true,
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev --prefix client\" \"npm run dev --prefix server\"",
+    "build": "npm run build --prefix client",
+    "start": "npm start --prefix server",
+    "test": "npm test --workspaces"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  },
+  "keywords": ["ada", "accessibility", "react", "node"],
+  "author": "Your Name",
+  "license": "ISC"
+}
