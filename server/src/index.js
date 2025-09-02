@@ -10,12 +10,12 @@ app.listen(PORT, () => {
 });
 
 
-app.get("/status", (request, response) => {
+app.post("/test", (request, response) => {
 const status = {
   "Status": "Running"
 };
-
-response.send(status);
+const name = request.body.name
+response.send("hello: " + name);
 });
 
 
