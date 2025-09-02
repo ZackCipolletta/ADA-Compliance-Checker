@@ -15,7 +15,7 @@ function App() {
 
   const displayMessage = (message) => {
     const sanitizedMessage = sanitize(message); // sanitize the string before calling the next function
-      document.getElementById('userInputText').innerHTML = sanitizedMessage;
+    document.getElementById('userInputText').innerHTML = sanitizedMessage;
   };
 
   function sanitize(string) { // sanitize the string of user data
@@ -41,12 +41,12 @@ function App() {
         >
         </textarea>
       </div>
-      <div id='userInputText' ></div>
       <div className="card">
         <button onClick={() => checkForUserInput()}>
           Submit
         </button>
       </div>
+      <div id='userInputText' ></div>
     </>
   );
 }
