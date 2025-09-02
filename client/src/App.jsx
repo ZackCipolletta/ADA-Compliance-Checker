@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-import analyzeHTML from '../../server/src';
+
 
 function App() {
   const [textInput, setTextInput] = useState('');
