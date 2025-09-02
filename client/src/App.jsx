@@ -32,8 +32,18 @@ function App() {
     return string.replace(reg, (match) => (map[match]));
   }
 
+  async function testEndpoint(params) {
+    const response = await fetch('http://localhost:3000/test', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ name: 'Zack' })
+    });
+    const result = await response.text();
+    console.log(result);
+  }
 
-  
 
   return (
     <>
@@ -48,6 +58,9 @@ function App() {
       <div className="card">
         <button onClick={() => checkForUserInput()}>
           Submit
+        </button>
+        <button onClick={() => testEndpoint()}>
+          Test Endpoint
         </button>
       </div>
       <div id='userInputText' ></div>
