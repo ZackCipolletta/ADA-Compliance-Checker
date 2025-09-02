@@ -1,27 +1,32 @@
-async function analyzeHTML(url, data) {
-  const headers = {};
-  headers['Content-Type'] = 'application/json';
+import express from 'express';
 
-  try {
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data),
-    });
+const app = express();
+app.use(express.json());
 
-    const responseData = await response.json();
-    if (!response.ok) {
-      console.error(`HTTP error! status: ${response.status}, body: ${responseData}`);
-      const error = new Error(responseData.message || 'An error occurred');
-      error.statusCode = response.status;
-      error.response = responseData;
-      throw error;
-    }
-    return { ok: true, ...responseData };
-  } catch (error) {
-    console.error("Error in postRequest: ", error);
-    throw error;
-  }
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log("Server Listening on PORT:", PORT);
+});
+
+
+app.get("/status", (request, response) => {
+const status = {
+  "Status": "Running"
 };
 
-export default analyzeHTML;
+response.send(status);
+});
+
+
+// async function analyzeHTML(data) {
+  
+//   const response = await fetch(url, {
+//       method: 'POST',
+//       headers: headers,
+//       body: JSON.stringify(data),
+//     });
+
+// };
+
+// export default analyzeHTML;
