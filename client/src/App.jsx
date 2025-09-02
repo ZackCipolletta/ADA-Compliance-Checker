@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './App.css';
+import analyzeHTML from '../../server/src';
 
 function App() {
   const [textInput, setTextInput] = useState('');
@@ -30,6 +31,8 @@ function App() {
     const reg = /[&<>"'/]/ig;
     return string.replace(reg, (match) => (map[match]));
   }
+
+
 
   return (
     <>
