@@ -71,3 +71,8 @@ textarea {
   width: 500px;
   height: 250px;
 }
+
+#userInputText {
+  text-align: left;
+  white-space: pre-wrap;
+}
