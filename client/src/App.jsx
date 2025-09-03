@@ -38,7 +38,7 @@ function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ input: textInput })
+      body: JSON.stringify({ html: textInput })
     });
     const result = await response.text();
     console.log(result);
@@ -59,8 +59,7 @@ function App() {
       }
     } else {
       console.log(`The document's primary language is not declared.`);
-    }
-
+    } 
   };
 
 
