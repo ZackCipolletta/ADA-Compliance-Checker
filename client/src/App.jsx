@@ -55,7 +55,7 @@ function App() {
         console.log(`Invalid or unregistered BCP 47 language tag: ${langAttribute}`);
       } else {
         console.log('everything looks good');
-        console.log(languageTags(langAttribute).valid());
+        console.log(languageTags('en').valid());
       }
     } else {
       console.log(`The document's primary language is not declared.`);
