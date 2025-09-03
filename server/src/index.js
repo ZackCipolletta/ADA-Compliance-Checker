@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import { JSDOM } from 'jsdom';
-import checkLanguage from './rules/generalStructure/checkLanguage';
+import checkLanguage from './rules/generalStructure/checkLanguage.js';
 
 const app = express();
 app.use(express.json());
