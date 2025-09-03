@@ -15,8 +15,8 @@ app.listen(PORT, () => {
     const status = {
       "Status": "Running"
     };
-    const name = request.body.name;
-    response.send("hello: " + name);
+    const input = request.body.input;
+    response.send("user input: " + input);
   });
 
 export {app};

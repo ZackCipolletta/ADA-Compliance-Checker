@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import './App.css';
-
+import languageTags from 'language-tags';
 
 function App() {
   const [textInput, setTextInput] = useState('');
@@ -38,11 +38,30 @@ function App() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name: 'Zack' })
+      body: JSON.stringify({ input: textInput })
     });
     const result = await response.text();
     console.log(result);
   }
+
+  const page = document.documentElement;
+
+
+  const checkAttributes = () => {
+    const langAttribute = page.getAttribute('lang');
+    if (langAttribute) {
+      console.log('page includes lang attribute: ' + langAttribute);
+      if (!languageTags(langAttribute).valid()) {
+        console.log(`Invalid or unregistered BCP 47 language tag: ${langAttribute}`);
+      } else {
+        console.log('everything looks good');
+        console.log(languageTags(langAttribute).valid());
+      }
+    } else {
+      console.log(`The document's primary language is not declared.`);
+    }
+
+  };
 
 
   return (
@@ -61,6 +80,9 @@ function App() {
         </button>
         <button onClick={() => testEndpoint()}>
           Test Endpoint
+        </button>
+        <button onClick={() => checkAttributes()}>
+          test attributes
         </button>
       </div>
       <div id='userInputText' ></div>

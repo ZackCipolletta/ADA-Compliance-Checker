@@ -16,7 +16,15 @@
   "devDependencies": {
     "concurrently": "^9.2.1"
   },
-  "keywords": ["ada", "accessibility", "react", "node"],
+  "keywords": [
+    "ada",
+    "accessibility",
+    "react",
+    "node"
+  ],
   "author": "Your Name",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "language-tags": "^2.1.0"
+  }
 }
