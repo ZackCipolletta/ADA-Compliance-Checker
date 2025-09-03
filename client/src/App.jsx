@@ -8,29 +8,30 @@ function App() {
   const checkForUserInput = () => {
     const trimText = textInput.trim(); // trim leading and trailing blank spaces from the textArea
     if (trimText) { // if the textArea isn't only blank space then call the next function
-      return displayMessage(testEndpoint);
+      return displayMessage(trimText);
     } else {
       return displayMessage("userInput has no value"); // if textArea is only blank space, return error
     }
   };
 
   const displayMessage = async (message) => {
-    // const sanitizedMessage = sanitize(message); // sanitize the string before calling the next function
-    document.getElementById('userInputText').innerHTML = await testEndpoint();
+
+    document.getElementById('userInputText').innerHTML = sanitize(message);
+    document.getElementById('identifiedIssues').innerHTML = await testEndpoint();
   };
 
-  // function sanitize(string) { // sanitize the string of user data
-  //   const map = {
-  //     '&': '&amp;',
-  //     '<': '&lt;',
-  //     '>': '&gt;',
-  //     '"': '&quot;',
-  //     "'": '&#x27;',
-  //     "/": '&#x2F;',
-  //   };
-  //   const reg = /[&<>"'/]/ig;
-  //   return string.replace(reg, (match) => (map[match]));
-  // }
+  function sanitize(string) { // sanitize the string of user data
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      "/": '&#x2F;',
+    };
+    const reg = /[&<>"'/]/ig;
+    return string.replace(reg, (match) => (map[match]));
+  }
 
   async function testEndpoint(params) {
     const response = await fetch('http://localhost:3000/test', {
@@ -86,6 +87,7 @@ function App() {
         </button>
       </div>
       <div id='userInputText' ></div>
+      <div id='identifiedIssues' ></div>
     </>
   );
 }
