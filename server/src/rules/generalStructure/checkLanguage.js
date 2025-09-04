@@ -12,16 +12,18 @@ function checkLanguage(dom) {
       return null;
     } else {
       return {
-        Element: `<html>`,
-        Details: `(DOC_LANG_INVALID): The <html> element must have a valid lang attribute. Found: "${langAttribute}"`,
-        Rule: '(DOC_LANG_INVALID)',
+        issue: `Invalid 'lang' Attribute`,
+        element: `<html>`,
+        details: `The <html> element must have a valid lang attribute. Found: "${langAttribute}"`,
+        rule: 'DOC_LANG_INVALID',
       };
     }
   } else {
     return {
-      Element: `<html>`,
-      Details: `(DOC_LANG_MISSING): The <html> element must have a valid lang attribute.`,
-      Rule: '(DOC_LANG_MISSING)',
+      issue: `Missing 'lang' Attribute`,
+      element: `<html>`,
+      details: `The <html> element must have a valid lang attribute.`,
+      rule: 'DOC_LANG_MISSING',
     };
   }
 }

@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import { JSDOM } from 'jsdom';
 import checkLanguage from './rules/generalStructure/checkLanguage.js';
+import checkTitle from './rules/generalStructure/title.js';
 
 const app = express();
 app.use(express.json());
@@ -14,24 +15,22 @@ app.listen(PORT, () => {
 });
 
 app.post("/test", (request, response) => {
-  const status = {
-    "Status": "Running"
-  };
   const htmlString = request.body.html;
 
   // check to verify that html string is actually present in body
   if (!htmlString) {
     return response.status(400).json({ error: 'No HTML provided' });
-  } else {
-
+  }
+  
     // Create a JSDOM instance from the string
     const dom = new JSDOM(htmlString);
     const htmlElement = dom.window.document.documentElement;
 
     const lang = checkLanguage(dom);
+    const title = checkTitle(dom);
+    // const colorContrast = checkColorContrast(dom);
 
-    response.send(lang);
-  }
+    response.send(title);
 });
 
 export { app };
