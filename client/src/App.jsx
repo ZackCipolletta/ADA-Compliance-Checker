@@ -5,6 +5,16 @@ import languageTags from 'language-tags';
 function App() {
   const [textInput, setTextInput] = useState('');
 
+  const clearAndCheck = () => {
+    clearIssuesDiv();
+    checkForUserInput();
+  }
+
+  const clearIssuesDiv = () => {
+    const issuesDiv = document.getElementById('identifiedIssues');
+    issuesDiv.innerHTML = '';
+  };
+
   const checkForUserInput = () => {
     const trimText = textInput.trim(); // trim leading and trailing blank spaces from the textArea
     if (trimText) { // if the textArea isn't only blank space then call the next function
@@ -21,12 +31,14 @@ function App() {
     const issuesDiv = document.getElementById('identifiedIssues');
 
     result.forEach((el) => {
+      const newDiv = document.createElement('div');
+
       if (el !== null) {
         if (el?.error) {
           // Format response as a list
-          issuesDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
+          newDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
         } else if (el.element && el.details && el.rule) {
-          issuesDiv.innerHTML = `
+          newDiv.innerHTML = `
       <div>
       ${sanitize(el.issue)}
         <ul>
@@ -38,6 +50,7 @@ function App() {
       `;
         }
       }
+      issuesDiv.appendChild(newDiv);
     });
   };
 
@@ -86,7 +99,7 @@ function App() {
         </textarea>
       </div>
       <div className="card">
-        <button onClick={() => checkForUserInput()}>
+        <button onClick={() => clearAndCheck()}>
           Submit
         </button>
         <button onClick={() => testEndpoint()}>
