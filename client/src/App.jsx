@@ -20,21 +20,25 @@ function App() {
 
     const issuesDiv = document.getElementById('identifiedIssues');
 
-    if (result?.error) {
-      // Format response as a list
-      issuesDiv.innerHTML = `<div>Error: ${sanitize(result.error)}</div>`;
-    } else if (result.element && result.details && result.rule ) {
-      issuesDiv.innerHTML = `
+    result.forEach((el) => {
+      if (el !== null) {
+        if (el?.error) {
+          // Format response as a list
+          issuesDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
+        } else if (el.element && el.details && el.rule) {
+          issuesDiv.innerHTML = `
       <div>
-      ${sanitize(result.issue)}
+      ${sanitize(el.issue)}
         <ul>
-          <li>Element: ${sanitize(result.element)}</li>
-          <li>Details: ${sanitize(result.details)}</li>
-          <li>Rule: ${sanitize(result.rule)}</li>
+          <li>Element: ${sanitize(el.element)}</li>
+          <li>Details: ${sanitize(el.details)}</li>
+          <li>Rule: ${sanitize(el.rule)}</li>
         </ul>
       </div>
       `;
-    }
+        }
+      }
+    });
   };
 
   function sanitize(string) { // sanitize the string of user data
@@ -62,29 +66,13 @@ function App() {
     if (result !== null) {
       console.log(`this is the result: ` + JSON.stringify(result));
     } else {
-      console.log('Everything looks good!')
+      console.log('Everything looks good!');
     }
-    
+
     return result;
   }
 
   const page = document.documentElement;
-
-
-  const checkAttributes = () => {
-    const langAttribute = page.getAttribute('lang');
-    if (langAttribute) {
-      console.log('page includes lang attribute: ' + langAttribute);
-      if (!languageTags(langAttribute).valid()) {
-        console.log(`Invalid or unregistered BCP 47 language tag: ${langAttribute}`);
-      } else {
-        console.log('everything looks good');
-        console.log(languageTags('en').valid());
-      }
-    } else {
-      console.log(`The document's primary language is not declared.`);
-    }
-  };
 
 
   return (
