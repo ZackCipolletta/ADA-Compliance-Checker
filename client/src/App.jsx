@@ -15,9 +15,24 @@ function App() {
   };
 
   const displayMessage = async (message) => {
-
     document.getElementById('userInputText').innerHTML = sanitize(message);
-    document.getElementById('identifiedIssues').innerHTML = await testEndpoint();
+    const result = await testEndpoint();
+
+    const issuesDiv = document.getElementById('identifiedIssues');
+
+    if (result) {
+      // Format response as a list
+      issuesDiv.innerHTML = `
+      <div>
+      ${sanitize(result.issue)}
+        <ul>
+          <li>Element: ${sanitize(result.element)}</li>
+          <li>Details: ${sanitize(result.details)}</li>
+          <li>Rule: ${sanitize(result.rule)}</li>
+        </ul>
+      </div>
+      `;
+    }
   };
 
   function sanitize(string) { // sanitize the string of user data
@@ -41,8 +56,13 @@ function App() {
       },
       body: JSON.stringify({ html: textInput })
     });
-    const result = await response.text();
-    console.log(`this is the result: ` + result);
+    const result = await response.json();
+    if (result !== null) {
+      console.log(`this is the result: ` + JSON.stringify(result));
+    } else {
+      console.log('Everything looks good!')
+    }
+    
     return result;
   }
 
