@@ -20,7 +20,7 @@ function App() {
     if (trimText) { // if the textArea isn't only blank space then call the next function
       return displayContrast(trimText);
     } else {
-      return displayMessage("userInput has no value"); // if textArea is only blank space, return error
+      return displayContrast("userInput has no value"); // if textArea is only blank space, return error
     }
   };
 
@@ -56,15 +56,15 @@ function App() {
 
 
   const displayContrast = async (message) => {
-    document.getElementById('userInputText').innerHTML = sanitize(message);
+    // document.getElementById('userInputText').innerHTML = sanitize(message);
     const result = await testEndpoint();
 
     console.log('API Result:', result); // Log the raw result
     console.log('Stringified Result:', JSON.stringify(result, null, 2));
 
-    const issuesDiv = document.getElementById('identifiedIssues');
+    // const issuesDiv = document.getElementById('identifiedIssues');
 
-    issuesDiv.innerHTML = (JSON.stringify(result));
+    // issuesDiv.innerHTML = (JSON.stringify(result));
   };
 
   function sanitize(string) { // sanitize the string of user data
