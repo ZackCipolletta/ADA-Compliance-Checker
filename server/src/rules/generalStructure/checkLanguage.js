@@ -1,4 +1,4 @@
-import languageTags, { check } from 'language-tags';
+import languageTags from 'language-tags';
 
 function checkLanguage(dom) {
   const htmlElement = dom.window.document.documentElement;

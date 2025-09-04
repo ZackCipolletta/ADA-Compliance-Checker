@@ -1,5 +1,3 @@
-
-
 function checkTitle(dom) {
   try {
     const titleElement = dom.window.document.title;

@@ -78,6 +78,7 @@ function App() {
     const result = await response.json();
     if (result !== null) {
       console.log(`this is the result: ` + JSON.stringify(result));
+      console.log(`this is the contrast: ` + JSON.stringify(result[1]));
     } else {
       console.log('Everything looks good!');
     }

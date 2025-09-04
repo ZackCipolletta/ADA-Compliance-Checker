@@ -3,6 +3,7 @@ import cors from 'cors';
 import { JSDOM } from 'jsdom';
 import checkLanguage from './rules/generalStructure/checkLanguage.js';
 import checkTitle from './rules/generalStructure/title.js';
+import colorContrast from './rules/generalStructure/colorContrast.js';
 
 const app = express();
 app.use(express.json());
@@ -28,10 +29,13 @@ app.post("/test", (request, response) => {
 
     const lang = checkLanguage(dom);
     const title = checkTitle(dom);
+    const contrast = colorContrast(dom)
     // const colorContrast = checkColorContrast(dom);
 
+
+
     // Return result or empty object if null
-    response.status(200).json([title, lang] || {});
+    response.status(200).json(contrast);
 
     // handle errors gracefully
   } catch (error) {
