@@ -39,6 +39,15 @@ function colorContrast(dom) {
       const elTagName = el.tagName;
       const elParent = el.parentNode.tagName;
       const computedStyle = dom.window.getComputedStyle(el);
+      const fontSize = computedStyle.fontSize || '16px'; // Default to 16px
+      const parentElementName = el.parentNode.tagName;
+
+      let parentFontSize = 'N/A';
+      const parentNode = el.parentNode;
+      if (parentNode && parentNode !== dom.window.document) {
+        const parentStyle = dom.window.getComputedStyle(parentNode);
+        parentFontSize = parentStyle.fontSize || '16px';
+      }
 
       let elColor = computedStyle.color || 'rgb(0, 0, 0)';
       let elBackgroundColor = computedStyle.backgroundColor || 'rgb(255, 255, 255)';
@@ -57,13 +66,20 @@ function colorContrast(dom) {
 
       const contrast = calculateContrastRatio(rgbStringToArray(elBackgroundColor), rgbStringToArray(elColor));
 
+      // if (contrast < 4.5) {
+      //   if(fontSize <)
+      // }
+
       const elData = {
         element: elTagName,
         text: el.textContent.trim(),
         color: elColor,
         backgroundColor: elBackgroundColor,
         elementParent: elParent,
-        contrastRatio: contrast
+        contrastRatio: contrast,
+        size: fontSize,
+        parent: parentElementName,
+        parentFontSize: parentFontSize
       };
       textContainingElements.push(elData);
     }

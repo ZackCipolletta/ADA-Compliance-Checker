@@ -125,6 +125,7 @@ function App() {
       </div>
       <div id='userInputText' ></div>
       <div id='identifiedIssues' ></div>
+      <div  style={{fontSize: '2em'}}>Hello there children!</div>
     </>
   );
 }
