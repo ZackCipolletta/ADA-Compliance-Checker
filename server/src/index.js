@@ -32,8 +32,6 @@ app.post("/test", (request, response) => {
     const contrast = colorContrast(dom)
     // const colorContrast = checkColorContrast(dom);
 
-
-
     // Return result or empty object if null
     response.status(200).json(contrast);
 

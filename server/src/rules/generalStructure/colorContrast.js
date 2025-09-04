@@ -9,13 +9,17 @@ function colorContrast(dom) {
   allElements.forEach(el => {
     // Check if the element contains text and not just whitespace
     if (el.textContent && el.textContent.trim().length > 0) {
-      textContainingElements.push(el);
+      const elementData = {
+        tagName: el.tagName.toLowerCase(),
+        textContent: el.textContent.trim(),
+        id: el.id || '',
+        className: el.className || '',
+        color: getComputedStyle(el).color || '',
+        backgroundColor: getComputedStyle(el).backgroundColor || ''
+      };
+      textContainingElements.push(elementData);
     }
   });
-
-  // textContainingElements.forEach(el => {
-  //   console.log(`this should be all the text on the page: ${el.textContent}`);
-  // });
 
   return textContainingElements;
 }
