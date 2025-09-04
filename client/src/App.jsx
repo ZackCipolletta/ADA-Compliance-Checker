@@ -20,8 +20,10 @@ function App() {
 
     const issuesDiv = document.getElementById('identifiedIssues');
 
-    if (result) {
+    if (result?.error) {
       // Format response as a list
+      issuesDiv.innerHTML = `<div>Error: ${sanitize(result.error)}</div>`;
+    } else if (result.element && result.details && result.rule ) {
       issuesDiv.innerHTML = `
       <div>
       ${sanitize(result.issue)}

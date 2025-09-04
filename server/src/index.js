@@ -15,22 +15,30 @@ app.listen(PORT, () => {
 });
 
 app.post("/test", (request, response) => {
-  const htmlString = request.body.html;
+  try {
+    const htmlString = request.body.html;
 
-  // check to verify that html string is actually present in body
-  if (!htmlString) {
-    return response.status(400).json({ error: 'No HTML provided' });
-  }
-  
+    // check to verify that html string is actually present in body
+    if (!htmlString) {
+      return response.status(400).json({ error: 'No HTML provided' });
+    }
+
     // Create a JSDOM instance from the string
     const dom = new JSDOM(htmlString);
-    const htmlElement = dom.window.document.documentElement;
 
     const lang = checkLanguage(dom);
     const title = checkTitle(dom);
     // const colorContrast = checkColorContrast(dom);
 
-    response.send(title);
+    // Return result or empty object if null
+    response.status(200).json(title || {});
+
+    // handle errors gracefully
+  } catch (error) {
+    console.error('Backend error: ', error);
+    response.status(500).json({ error: 'Internal server error' });
+  }
+
 });
 
 export { app };
