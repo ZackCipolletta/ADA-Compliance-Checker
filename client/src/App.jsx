@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import './App.css';
-import languageTags from 'language-tags';
 
 function App() {
   const [textInput, setTextInput] = useState('');
@@ -26,7 +25,7 @@ function App() {
 
   const displayMessage = async (message) => {
     document.getElementById('userInputText').innerHTML = sanitize(message);
-    const result = await testEndpoint();
+    const result = await testEndpoint(textInput);
 
     const issuesDiv = document.getElementById('identifiedIssues');
 
@@ -54,19 +53,6 @@ function App() {
     });
   };
 
-
-  // const displayContrast = async (message) => {
-  //   // document.getElementById('userInputText').innerHTML = sanitize(message);
-  //   const result = await testEndpoint();
-
-  //   console.log('API Result:', result); // Log the raw result
-  //   console.log('Stringified Result:', JSON.stringify(result, null, 2));
-
-  //   // const issuesDiv = document.getElementById('identifiedIssues');
-
-  //   // issuesDiv.innerHTML = (JSON.stringify(result));
-  // };
-
   function sanitize(string) { // sanitize the string of user data
     const map = {
       '&': '&amp;',
@@ -81,26 +67,42 @@ function App() {
   }
 
   async function testEndpoint(params) {
-    const response = await fetch('http://localhost:3000/test', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ html: textInput })
-    });
-    const result = await response.json();
-    if (result !== null) {
-      console.log(`this is the result: ` + (result));
-      console.log(`this is the contrast: ` + JSON.stringify(result));
-    } else {
-      console.log('Everything looks good!');
-    }
+    try {
+      const response = await fetch('http://localhost:3000/test', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ html: params })
+      });
 
-    return result;
+      // Error handling if the server does not respond with ok status
+      if (!response.ok) {
+        console.error(`Server responded with status: ${response.status}`);
+        return [{ error: `Server error: ${response.status}` }];
+      }
+
+      const result = await response.json();
+      console.log(`Raw result: `, result);
+      console.log('Stringified Result:', JSON.stringify(result, null, 2));
+
+      if (result) {
+        console.log(`Result as JSON:  `, JSON.stringify(result));
+      } else {
+        console.log('No result returned from server');
+        return [{ error: `No result returned from server` }];
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Fetch error: ', error);
+      // since we are expecting an array response from the server, we return an array with 
+      // error for consistency in case of issue 
+      return [{ error: `Fetch error: ${error.message}` }];
+    }
   }
 
   const page = document.documentElement;
-
 
   return (
     <>
@@ -125,7 +127,7 @@ function App() {
       </div>
       <div id='userInputText' ></div>
       <div id='identifiedIssues' ></div>
-      <div  style={{fontSize: '2em'}}>Hello there children!</div>
+      <div style={{ fontSize: '2em' }}>Hello there children!</div>
     </>
   );
 }

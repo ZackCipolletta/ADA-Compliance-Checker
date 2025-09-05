@@ -32,7 +32,7 @@ function colorContrast(dom) {
 
   // select all elements in the doc
   const allElements = dom.window.document.querySelectorAll('*');
-  let textContainingElements = [];
+  const contrastIssues = [];
 
   allElements.forEach(el => {
     // Check if the element contains text and not just whitespace
@@ -114,24 +114,13 @@ function colorContrast(dom) {
         }
       };
 
-      const contrastChecked = contrastChecker(contrast, fontSizePx);
-
-      const elData = {
-        element: elTagName,
-        text: el.textContent.trim(),
-        color: elColor,
-        backgroundColor: elBackgroundColor,
-        parent: parentElementName,
-        size: fontSizePx,
-        parentFontSize: parentFontSizePx,
-        issue: contrastChecked,
-        contrastRatio: contrast,
-      };
-      textContainingElements.push(elData);
+      const contrastResult = contrastChecker(contrast, fontSizePx);
+      if (contrastResult) {
+        contrastIssues.push(contrastResult);
+      }
     }
-
   });
-  return textContainingElements;
+  return contrastIssues;
 }
 
 export default colorContrast;
