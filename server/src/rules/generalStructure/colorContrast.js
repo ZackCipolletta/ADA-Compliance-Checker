@@ -37,7 +37,7 @@ function colorContrast(dom) {
   allElements.forEach(el => {
     // Check if the element contains text and not just whitespace
     if (el.textContent && el.textContent.trim().length > 0) {
-      const elTagName = el.tagName;
+      const elTagName = el.tagName.toLowerCase();
       const elParent = el.parentNode.tagName;
       const computedStyle = dom.window.getComputedStyle(el);
       const fontSize = computedStyle.fontSize || '16px'; // Default to 16px
@@ -95,7 +95,7 @@ function colorContrast(dom) {
         } else if (con < 4.5 && con >= 3 && sizePx < 24) {
           return {
             issue: `Color Contrast`,
-            element: `${el}`,
+            element: `<${elTagName}>`,
             details: `Text must have a contrast ratio of at least 4.5:1 for normal text and 
               3.0:1 for large text.`,
             rule: 'COLOR_CONTRAST',
@@ -104,7 +104,7 @@ function colorContrast(dom) {
         } else if (con < 3) {
           return {
             issue: `Color Contrast`,
-            element: `${el}`,
+            element: `<${elTagName}>`,
             details: `Text must have a contrast ratio of at least 4.5:1 for normal text and 
               3.0:1 for large text.`,
             rule: 'COLOR_CONTRAST',
@@ -120,7 +120,7 @@ function colorContrast(dom) {
       }
     }
   });
-  return contrastIssues;
+  return contrastIssues[0];
 }
 
 export default colorContrast;

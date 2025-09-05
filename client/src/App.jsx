@@ -102,8 +102,6 @@ function App() {
     }
   }
 
-  const page = document.documentElement;
-
   return (
     <>
       <div>
