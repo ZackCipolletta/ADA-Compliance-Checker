@@ -1,7 +1,7 @@
 function imageAltText(dom) {
 
 
-  // select all elements in the doc
+  // select all '<img>' elements in the doc
   const imgElements = dom.window.document.getElementsByTagName('img');
   const imgIssues = [];
 

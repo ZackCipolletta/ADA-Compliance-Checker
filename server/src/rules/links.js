@@ -1,6 +1,6 @@
 function checkForGenericLinkText(dom) {
 
-  // select all elements in the doc
+  // select all '<a>' elements in the doc
   const linkElements = dom.window.document.getElementsByTagName('a');
   const genericLinks = [];
   
