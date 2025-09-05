@@ -1,5 +1,6 @@
 function colorContrast(dom) {
 
+  // function to calculate contrast ratio
   const calculateContrastRatio = (color1, color2) => {
     const RED = 0.2126;
     const GREEN = 0.7152;
@@ -21,8 +22,8 @@ function colorContrast(dom) {
       var lum1 = luminance(...rgb1);
       var lum2 = luminance(...rgb2);
 
-      var brightest = Math.max(lum1, lum2);
-      var darkest = Math.min(lum1, lum2);
+      var brightest = parseFloat(Math.max(lum1, lum2).toFixed(2));
+      var darkest = parseFloat(Math.min(lum1, lum2).toFixed(2));
       return (brightest + 0.05) / (darkest + 0.05);
     }
     return contrast(color1, color2);
@@ -42,6 +43,8 @@ function colorContrast(dom) {
       const fontSize = computedStyle.fontSize || '16px'; // Default to 16px
       const parentElementName = el.parentNode.tagName;
 
+      // assign default value to parentFontSize in case the parent does not have a font size value
+      // retrieve parent font size in order to calculate 'em' size.
       let parentFontSize = 'N/A';
       const parentNode = el.parentNode;
       if (parentNode && parentNode !== dom.window.document) {
@@ -49,13 +52,16 @@ function colorContrast(dom) {
         parentFontSize = parentStyle.fontSize || '16px';
       }
 
+      // assign default values for color if no color assigned
       let elColor = computedStyle.color || 'rgb(0, 0, 0)';
       let elBackgroundColor = computedStyle.backgroundColor || 'rgb(255, 255, 255)';
 
+      // since JSDOM has limitations when retrieving color props, assign default value
       if (elColor === 'canvastext') {
         elColor = 'rgb(0, 0, 0)';
       }
 
+      // JSDOM may incorrectly assign bg color value of black or transparent
       if (elBackgroundColor === 'rgba(0, 0, 0, 0)') {
         elBackgroundColor = 'rgb(255, 255, 255)';
       }
@@ -64,22 +70,62 @@ function colorContrast(dom) {
         return rgbString.match(/\d+/g).map(Number);
       };
 
+      // use text and bg color to calculate contrast ratio
       const contrast = calculateContrastRatio(rgbStringToArray(elBackgroundColor), rgbStringToArray(elColor));
 
-      // if (contrast < 4.5) {
-      //   if(fontSize <)
-      // }
+      // convert font sizes to pixels for accurate size evaluation
+      const getFontSizeInPixels = (fontSize) => {
+        if (fontSize.includes('px')) {
+          return parseFloat(fontSize);
+        } else if (fontSize.includes('em')) {
+          return parseFloat(fontSize) * parseFloat(parentFontSize);
+        } else {
+          return parseFloat(fontSize);
+        }
+      };
+
+      const fontSizePx = getFontSizeInPixels(fontSize);
+      const parentFontSizePx = getFontSizeInPixels(parentFontSize);
+
+      const contrastChecker = (con, sizePx) => {
+        // if contrast is above 4.5:1 there are no issues
+        if (con >= 4.5) {
+          return null;
+          // if contrast is below 4.5:1 and above 3.0:1 the text must be large
+        } else if (con < 4.5 && con >= 3 && sizePx < 24) {
+          return {
+            issue: `Color Contrast`,
+            element: `${el}`,
+            details: `Text must have a contrast ratio of at least 4.5:1 for normal text and 
+              3.0:1 for large text.`,
+            rule: 'COLOR_CONTRAST',
+          };
+          // if contrast is below 3.0:1 the contrast must be higher
+        } else if (con < 3) {
+          return {
+            issue: `Color Contrast`,
+            element: `${el}`,
+            details: `Text must have a contrast ratio of at least 4.5:1 for normal text and 
+              3.0:1 for large text.`,
+            rule: 'COLOR_CONTRAST',
+          };
+        } else {
+          return null;
+        }
+      };
+
+      const contrastChecked = contrastChecker(contrast, fontSizePx);
 
       const elData = {
         element: elTagName,
         text: el.textContent.trim(),
         color: elColor,
         backgroundColor: elBackgroundColor,
-        elementParent: elParent,
-        contrastRatio: contrast,
-        size: fontSize,
         parent: parentElementName,
-        parentFontSize: parentFontSize
+        size: fontSizePx,
+        parentFontSize: parentFontSizePx,
+        issue: contrastChecked,
+        contrastRatio: contrast,
       };
       textContainingElements.push(elData);
     }

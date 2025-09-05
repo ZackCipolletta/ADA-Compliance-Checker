@@ -33,7 +33,7 @@ app.post("/test", (request, response) => {
     // const colorContrast = checkColorContrast(dom);
 
     // Return result or empty object if null
-    response.status(200).json(contrast);
+    response.status(200).json(lang, title, contrast);
 
     // handle errors gracefully
   } catch (error) {
