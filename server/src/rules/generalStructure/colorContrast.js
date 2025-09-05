@@ -120,7 +120,7 @@ function colorContrast(dom) {
       }
     }
   });
-  return contrastIssues[0];
+  return contrastIssues;
 }
 
 export default colorContrast;

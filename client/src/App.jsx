@@ -29,10 +29,19 @@ function App() {
 
     const issuesDiv = document.getElementById('identifiedIssues');
 
-    result.forEach((el) => {
+    // Flatten nested arrays and filter out null/undefined
+    const flatResults = [].concat(...result).filter(Boolean);
+
+    if (flatResults.length === 0) {
+      const newDiv = document.createElement('div');
+      newDiv.innerHTML = `<div>No issues found</div>`
+      issuesDiv.appendChild(newDiv);
+      return
+    }
+
+    flatResults.forEach((el) => {
       const newDiv = document.createElement('div');
 
-      if (el !== null) {
         if (el?.error) {
           // Format response as a list
           newDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
@@ -48,7 +57,6 @@ function App() {
       </div>
       `;
         }
-      }
       issuesDiv.appendChild(newDiv);
     });
   };
