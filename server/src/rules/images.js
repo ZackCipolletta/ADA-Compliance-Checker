@@ -27,6 +27,14 @@ function imageAltText(dom) {
         rule: 'IMG_ALT_EMPTY',
       };
       imgIssues.push(issue);
+    } else if (alt.length > 120) {
+      const issue = {
+        issue: `Img 'alt' Length`,
+        element: `<img>`,
+        details: `The image at position ${index + 1} contains alt text ${alt.length} characters in length. The alt attribute text should not exceed 120 characters to remain concise.`,
+        rule: 'IMG_ALT_LENGTH',
+      };
+      imgIssues.push(issue);
     }
   });
 
