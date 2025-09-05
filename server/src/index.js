@@ -5,6 +5,7 @@ import checkLanguage from './rules/generalStructure/checkLanguage.js';
 import checkTitle from './rules/generalStructure/title.js';
 import colorContrast from './rules/generalStructure/colorContrast.js';
 import imageAltText from './rules/images.js';
+import checkForGenericLinkText from './rules/links.js';
 
 const app = express();
 app.use(express.json());
@@ -32,10 +33,11 @@ app.post("/test", (request, response) => {
     const title = checkTitle(dom);
     const contrast = colorContrast(dom)
     const imgs = imageAltText(dom)
+    const links = checkForGenericLinkText(dom)
     // const colorContrast = checkColorContrast(dom);
 
     // Return result or empty object if null
-    response.status(200).json([lang, title, contrast, imgs]);
+    response.status(200).json([lang, title, contrast, imgs, links]);
 
     // handle errors gracefully
   } catch (error) {
