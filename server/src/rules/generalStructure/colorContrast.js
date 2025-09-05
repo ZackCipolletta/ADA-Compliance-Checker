@@ -38,10 +38,8 @@ function colorContrast(dom) {
     // Check if the element contains text and not just whitespace
     if (el.textContent && el.textContent.trim().length > 0) {
       const elTagName = el.tagName.toLowerCase();
-      const elParent = el.parentNode.tagName;
       const computedStyle = dom.window.getComputedStyle(el);
       const fontSize = computedStyle.fontSize || '16px'; // Default to 16px
-      const parentElementName = el.parentNode.tagName;
 
       // assign default value to parentFontSize in case the parent does not have a font size value
       // retrieve parent font size in order to calculate 'em' size.
@@ -85,7 +83,6 @@ function colorContrast(dom) {
       };
 
       const fontSizePx = getFontSizeInPixels(fontSize);
-      const parentFontSizePx = getFontSizeInPixels(parentFontSize);
 
       const contrastChecker = (con, sizePx) => {
         // if contrast is above 4.5:1 there are no issues
