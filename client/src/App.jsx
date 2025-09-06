@@ -4,11 +4,12 @@ import './App.css';
 function App() {
   const [textInput, setTextInput] = useState('');
 
+  
   const clearAndCheck = () => {
     clearIssuesDiv();
     checkForUserInput();
   };
-
+// utility function to clear the page
   const clearIssuesDiv = () => {
     const issuesDiv = document.getElementById('identifiedIssues');
     issuesDiv.innerHTML = '';
@@ -25,7 +26,7 @@ function App() {
 
   const displayMessage = async (message) => {
     // document.getElementById('userInputText').innerHTML = sanitize(message);
-    const result = await testEndpoint(textInput);
+    const result = await checkCompliance(textInput);
 
     const issuesDiv = document.getElementById('identifiedIssues');
 
@@ -39,6 +40,7 @@ function App() {
       return
     }
 
+    // for each issue received from the server create a new div to display the information for the user
     flatResults.forEach((el) => {
       const newDiv = document.createElement('div');
 
@@ -74,9 +76,9 @@ function App() {
     return string.replace(reg, (match) => (map[match]));
   }
 
-  async function testEndpoint(params) {
+  async function checkCompliance(params) {
     try {
-      const response = await fetch('http://localhost:3000/test', {
+      const response = await fetch('http://localhost:3000/adacompliance', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -124,7 +126,7 @@ function App() {
         <button onClick={() => clearAndCheck()}>
           Submit
         </button>
-        <button onClick={() => testEndpoint()}>
+        <button onClick={() => checkCompliance()}>
           Test Endpoint
         </button>
         <button onClick={() => checkAttributes()}>

@@ -18,7 +18,7 @@ app.listen(PORT, () => {
   console.log("Server Listening on PORT:", PORT);
 });
 
-app.post("/test", (request, response) => {
+app.post("/adacompliance", (request, response) => {
   try {
     const htmlString = request.body.html;
 
