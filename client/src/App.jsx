@@ -3,6 +3,7 @@ import './App.css';
 
 function App() {
   const [textInput, setTextInput] = useState('');
+  const [displayOutput, setDisplayOutput] = useState(false);
 
   const clearAndCheck = () => {
     clearIssuesDiv();
@@ -17,8 +18,10 @@ function App() {
   const checkForUserInput = () => {
     const trimText = textInput.trim(); // trim leading and trailing blank spaces from the textArea
     if (trimText) { // if the textArea isn't only blank space then call the next function
+      setDisplayOutput(true);
       return displayMessage(trimText);
     } else {
+      setDisplayOutput(false);
       return displayMessage("userInput has no value"); // if textArea is only blank space, return error
     }
   };
@@ -40,16 +43,17 @@ function App() {
     }
 
     // for each issue received from the server create a new div to display the information for the user
-    flatResults.forEach((el) => {
+    flatResults.forEach((el, index) => {
       const newDiv = document.createElement('div');
 
       if (el?.error) {
         // Format response as a list
         newDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
       } else if (el.element && el.details && el.rule) {
+        newDiv.className = 'issue-box';
         newDiv.innerHTML = `
       <div>
-      <strong>${sanitize(el.issue)}</strong>
+      <strong>${index +1}. ${sanitize(el.issue)}</strong>
         <ul>
           <li>Element: ${sanitize(el.element)}</li>
           <li>Details: ${sanitize(el.details)}</li>
@@ -117,18 +121,16 @@ function App() {
           Submit
         </button>
       </div>
-      <div id='inputHeader'>
-        <strong>Input HTML Code</strong>
-      </div>
-      <div id='issuesHeader'>
-        <strong>Input HTML Code</strong>
-      </div>
-      <div className="issues-container">
+      
+      <div style={{ display: displayOutput ? "flex" : "none" }}className="issues-container">
         <div>
-          <div id='userInputText' ></div>
+          <h3>Input HTML Code</h3>
+          <div id='userInputText' class="box"></div>
         </div>
+
         <div>
-          <div id='identifiedIssues' ></div>
+          <h3>Identified Issues</h3>
+          <div id='identifiedIssues' class="box"></div>
         </div>
       </div>
     </>

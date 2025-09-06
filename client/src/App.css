@@ -27,12 +27,6 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
 .card {
   padding: 2em;
 }
@@ -41,17 +35,33 @@
   color: #888;
 }
 
+.box {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  min-height: 100px;
+  text-align: left;
+}
 
 .issues-container {
   display: flex;
-  justify-content: flex-start;
-  gap: 2rem;
+  justify-content: space-between; /* spread them out */
+  align-items: flex-start;        /* align boxes at the top */
+  gap: 2rem;                      /* space between them */
+  margin-top: 2rem;               /* optional spacing */
 }
 
 .issues-container > div {
-  width: 45%;
-  text-align: left;
-  padding: 1rem;
+  flex: 1;          /* each takes equal width */
+  max-width: 45%;   /* prevents them from being too wide */
+}
+
+.issue-box {
   border: 1px solid #ccc;
-  min-height: 100px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+}
+.issue-box strong {
+  display: block;
+  margin-bottom: 0.5rem;
 }
