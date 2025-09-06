@@ -24,7 +24,7 @@ function App() {
   };
 
   const displayMessage = async (message) => {
-    document.getElementById('userInputText').innerHTML = sanitize(message);
+    // document.getElementById('userInputText').innerHTML = sanitize(message);
     const result = await testEndpoint(textInput);
 
     const issuesDiv = document.getElementById('identifiedIssues');

@@ -1,28 +1,30 @@
-function checkForGenericLinkText(dom) {
+function checkHeadings(dom) {
 
   // select all ,h1 elements in the doc
-  const headers = `h1, h2, h3, h4, h5, h6`
-  const headerElements = Array.from(dom.window.document.getElementsByTagName(headers));
-  
-  if (headerElements) {
-    
-  }
-  // Convert HTMLCollection to array for easier manipulation
-  headerElements.forEach((header, index) => {
-    // Normalize text: remove newlines, tabs, multiple spaces, and trim
+  const headers = `h1, h2, h3, h4, h5, h6`;
+  const headerElements = Array.from(dom.window.document.querySelectorAll(headers));
+  const foundHeaders = [];
 
-    if (genericLinkText.includes(linkText)) {
-      const problemLink = {
-        issue: `Meaningful Link Text`,
-        element: `<a>`,
-        details: `The link at position ${index + 1} is has generic link text: '${linkText}'. 
-      Link text must not be generic (e.g., "click here").`,
-        rule: 'LINK_GENERIC_TEXT',
-      };
-      genericLinks.push(problemLink);
+  if (headerElements) {
+    headerElements.forEach(el => {
+      foundHeaders.push(el.tagName.toLowerCase());
+    });
+  }
+
+  const isH1 = (val) => {
+    if (val === 'h1') {
+      return val;
     }
-  });
-  return genericLinks;
+  };
+
+  if (foundHeaders.filter(isH1).length > 1) {
+    return {
+      issue: `Single <h1>`,
+      element: `<h1>`,
+      details: `There must be only one <h1> per page. Number of <h1> tags found: ${foundHeaders.filter(isH1).length}`,
+      rule: 'HEADING_MULTIPLE_H1:',
+    };;
+  }
 }
 
-export default checkForGenericLinkText;
+export default checkHeadings;
