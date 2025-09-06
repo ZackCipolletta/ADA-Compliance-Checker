@@ -3,12 +3,12 @@ import './App.css';
 
 function App() {
   const [textInput, setTextInput] = useState('');
-  
+
   const clearAndCheck = () => {
     clearIssuesDiv();
     checkForUserInput();
   };
-// utility function to clear the page
+  // utility function to clear the page
   const clearIssuesDiv = () => {
     const issuesDiv = document.getElementById('identifiedIssues');
     issuesDiv.innerHTML = '';
@@ -24,7 +24,7 @@ function App() {
   };
 
   const displayMessage = async (message) => {
-    // document.getElementById('userInputText').innerHTML = sanitize(message);
+    document.getElementById('userInputText').innerHTML = sanitize(message);
     const result = await checkCompliance(textInput);
 
     const issuesDiv = document.getElementById('identifiedIssues');
@@ -34,22 +34,22 @@ function App() {
 
     if (flatResults.length === 0) {
       const newDiv = document.createElement('div');
-      newDiv.innerHTML = `<div>No issues found</div>`
+      newDiv.innerHTML = `<div>No issues found</div>`;
       issuesDiv.appendChild(newDiv);
-      return
+      return;
     }
 
     // for each issue received from the server create a new div to display the information for the user
     flatResults.forEach((el) => {
       const newDiv = document.createElement('div');
 
-        if (el?.error) {
-          // Format response as a list
-          newDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
-        } else if (el.element && el.details && el.rule) {
-          newDiv.innerHTML = `
+      if (el?.error) {
+        // Format response as a list
+        newDiv.innerHTML = `<div>Error: ${sanitize(el.error)}</div>`;
+      } else if (el.element && el.details && el.rule) {
+        newDiv.innerHTML = `
       <div>
-      ${sanitize(el.issue)}
+      <strong>${sanitize(el.issue)}</strong>
         <ul>
           <li>Element: ${sanitize(el.element)}</li>
           <li>Details: ${sanitize(el.details)}</li>
@@ -57,7 +57,7 @@ function App() {
         </ul>
       </div>
       `;
-        }
+      }
       issuesDiv.appendChild(newDiv);
     });
   };
@@ -92,15 +92,6 @@ function App() {
       }
 
       const result = await response.json();
-      console.log(`Raw result: `, result);
-      console.log('Stringified Result:', JSON.stringify(result, null, 2));
-
-      if (result) {
-        console.log(`Result as JSON:  `, JSON.stringify(result));
-      } else {
-        console.log('No result returned from server');
-        return [{ error: `No result returned from server` }];
-      }
 
       return result;
     } catch (error) {
@@ -126,8 +117,20 @@ function App() {
           Submit
         </button>
       </div>
-      <div id='userInputText' ></div>
-      <div id='identifiedIssues' ></div>
+      <div id='inputHeader'>
+        <strong>Input HTML Code</strong>
+      </div>
+      <div id='issuesHeader'>
+        <strong>Input HTML Code</strong>
+      </div>
+      <div className="issues-container">
+        <div>
+          <div id='userInputText' ></div>
+        </div>
+        <div>
+          <div id='identifiedIssues' ></div>
+        </div>
+      </div>
     </>
   );
 }

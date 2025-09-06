@@ -40,3 +40,18 @@
 .read-the-docs {
   color: #888;
 }
+
+
+.issues-container {
+  display: flex;
+  justify-content: flex-start;
+  gap: 2rem;
+}
+
+.issues-container > div {
+  width: 45%;
+  text-align: left;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  min-height: 100px;
+}
