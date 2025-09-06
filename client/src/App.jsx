@@ -3,7 +3,6 @@ import './App.css';
 
 function App() {
   const [textInput, setTextInput] = useState('');
-
   
   const clearAndCheck = () => {
     clearIssuesDiv();
