@@ -1,5 +1,5 @@
 {
-  "name": "ada-compliance-checker-server",
+  "name": "ada-compliance-checker-backend",
   "version": "0.0.1",
   "private": true,
   "scripts": {
