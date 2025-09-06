@@ -1,9 +1,9 @@
 ADA Compliance Checker
-The ADA Compliance Checker is a web application designed to analyze HTML code for accessibility compliance, based on standards such as WCAG and ADA. It features a React frontend for user interaction and a Node.js backend for processing HTML and checking for accessibility issues using tools like axe-core and language-tags.
+The ADA Compliance Checker is a web application designed to analyze HTML code for accessibility compliance, based on standards such as WCAG and ADA. It features a React frontend for user interaction and a Node.js backend for processing HTML and checking for accessibility issues using custom validation functions (e.g., checking heading structure and language attributes) with jsdom for DOM parsing and language-tags for language tag validation.
 The project is structured as a monorepo with two workspaces:
 
-client: The React frontend, built with Vite.
-server: The Node.js backend, built with Express.
+client: The React frontend, built with Vite, where users input HTML and view accessibility issues.
+server: The Node.js backend, built with Express, which processes HTML input and returns accessibility compliance results.
 
 Prerequisites
 Before setting up and running the application, ensure you have the following installed:
@@ -25,7 +25,7 @@ Replace <repository-url> with the URL of the git repository hosting the project.
 Install Dependencies:The project uses a monorepo structure, so dependencies for both client and server are installed from the root directory.
 npm install
 
-This command installs dependencies listed in the root package.json (axe-core, body-parser, jsdom, language-tags, concurrently) and triggers installation for the client and server workspaces.
+This command installs dependencies listed in the root package.json (jsdom, language-tags, body-parser) and triggers installation for the client (react, react-dom, axios) and server (express, body-parser, jsdom, cors) workspaces. Note: The axe-core dependency is included but unused in the current implementation.
 
 
 Running the Application
@@ -42,7 +42,7 @@ The server (npm run dev --prefix server), which starts the Express server with n
 
 
 Open your browser and navigate to http://localhost:5173 to access the frontend.
-The frontend will communicate with the backend at http://localhost:3000/adacompliance for accessibility checks.
+The frontend sends HTML input to the backend at http://localhost:3000/adacompliance for accessibility checks.
 
 Option 2: Run Client and Server Separately
 If you prefer to start the client and server in separate terminal sessions:
@@ -91,46 +91,39 @@ This runs node src/index.js in the server directory.
 Directory Structure
 
 client/: React frontend built with Vite.
-src/App.jsx: Main React component with a textarea for HTML input and display areas for input and accessibility issues.
-Uses axios to communicate with the backend.
+src/App.jsx: Main React component with a textarea for HTML input, displaying the input and accessibility issues side by side.
+Uses axios to send HTML to the backend’s /adacompliance endpoint.
 
 
 server/: Node.js backend built with Express.
-src/index.js: Entry point for the server, likely handling the /adacompliance endpoint.
-Uses axe-core for accessibility checks and jsdom for DOM parsing.
+src/index.js: Entry point for the server, handling the /adacompliance endpoint to process HTML input.
+Uses jsdom for DOM parsing and language-tags for validating language attributes, with custom functions like checkHeadings and checkLanguage for accessibility checks.
 
 
 package.json (root): Defines monorepo workspaces and scripts to run both client and server.
 
-Testing
-To run tests for both client and server:
-npm test
 
-This executes the test script in both workspaces. Note: The provided package.json files do not define specific test scripts for client or server, so you may need to add testing frameworks (e.g., Jest, Vitest) if testing is required.
+Note: The provided package.json files do not define specific test scripts for client or server. You may need to add testing frameworks (e.g., Jest, Vitest) to implement tests.
 Troubleshooting
 
 Port Conflicts:
-If http://localhost:5173 or http://localhost:3000 is in use, check for other running processes and terminate them or configure different ports in client/vite.config.js or server/src/index.js.
+If http://localhost:5173 or http://localhost:3000 is in use, check for other running processes (lsof -i :5173 or lsof -i :3000) and terminate them, or configure different ports in client/vite.config.js or server/src/index.js.
 
 
 CORS Issues:
-The server includes the cors package, which should allow cross-origin requests from the frontend. Ensure the backend is configured to allow requests from http://localhost:5173.
+The server includes the cors package to allow cross-origin requests from the frontend. Ensure the backend is configured to allow requests from http://localhost:5173 in server/src/index.js.
 
 
 Dependency Errors:
-If npm install fails, ensure you have Node.js 18+ and try deleting node_modules and package-lock.json, then run npm install again.
+If npm install fails, ensure Node.js 18+ is installed. Try deleting node_modules and package-lock.json, then run npm install again.
 
 
 Backend Errors:
-If the /adacompliance endpoint fails, verify that src/index.js in the server directory is correctly set up to handle POST requests with body-parser and jsdom.
+If the /adacompliance endpoint fails, verify that server/src/index.js is set up to handle POST requests with body-parser and processes HTML using jsdom and custom accessibility checks (e.g., checkHeadings, checkLanguage).
 
 
+Frontend Errors:
+Ensure the frontend is correctly sending HTML input to http://localhost:3000/adacompliance via axios. Check the browser’s console for errors.
 
-Next Steps
 
-Add test scripts to client and server package.json files for automated testing.
-Configure the backend to serve the built frontend files for production deployment.
-Enhance the frontend UI with additional styling or accessibility features.
-Document the /adacompliance endpoint’s expected input and output formats.
-
-For further assistance, contact the project author or refer to the documentation for dependencies like axe-core and language-tags.
+For further assistance, contact the project author or refer to the documentation for dependencies like jsdom and language-tags.
