@@ -3,20 +3,9 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  margin-top:5rem;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
-}
 
 @keyframes logo-spin {
   from {
@@ -46,7 +35,6 @@
   display: flex;
   justify-content: space-between; /* spread them out */
   align-items: flex-start;        /* align boxes at the top */
-  gap: 2rem;                      /* space between them */
   margin-top: 2rem;               /* optional spacing */
 }
 
