@@ -25,7 +25,6 @@
   "author": "Your Name",
   "license": "ISC",
   "dependencies": {
-    "axe-core": "^4.10.3",
     "body-parser": "^2.2.0",
     "jsdom": "^26.1.0",
     "language-tags": "^2.1.0"
