@@ -38,7 +38,7 @@ app.post("/test", (request, response) => {
     const headings = checkHeadings(dom)
 
     // Return result or empty object if null
-    response.status(200).json([headings]);
+    response.status(200).json([lang, title, contrast, imgs, links, headings]);
 
     // handle errors gracefully
   } catch (error) {
