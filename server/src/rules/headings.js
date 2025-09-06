@@ -2,23 +2,27 @@ function checkHeadings(dom) {
 
   // select all ,h1 elements in the doc
   const headers = `h1, h2, h3, h4, h5, h6`;
+  // create and array from the html collection containing all header elements
   const headerElements = Array.from(dom.window.document.querySelectorAll(headers));
   const foundHeaders = [];
   const headerIssues = [];
   let previousLevel = 0;
 
+  // create an array of the tags for each header element found
   if (headerElements) {
     headerElements.forEach(el => {
       foundHeaders.push(el.tagName.toLowerCase());
     });
   }
 
+  // utility function to check if a given element is an h1 tag
   const isH1 = (val) => {
     if (val === 'h1') {
       return val;
     }
   };
 
+  // check if the array of header tags contains more than one h1 tag
   if (foundHeaders.filter(isH1).length > 1) {
     const multipleH1 = {
       issue: `Single <h1>`,
@@ -29,6 +33,7 @@ function checkHeadings(dom) {
     headerIssues.push(multipleH1);
   }
 
+  // use a for loop to loop through the array of header tags to check the hierarchy order
   for (const el of foundHeaders) {
     // Extract the number from the heading tag
     const currentLevel = parseInt(el.slice(1));

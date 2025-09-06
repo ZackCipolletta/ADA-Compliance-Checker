@@ -5,9 +5,11 @@ function imageAltText(dom) {
   const imgElements = dom.window.document.getElementsByTagName('img');
   const imgIssues = [];
 
-  // Convert HTMLCollection to array for easier manipulation
+  // Convert HTMLCollection to array for easier manipulation and loop through each element in the array
   Array.from(imgElements).forEach((img, index) => {
+    // check the alt attribute for each element in the array
     const alt = img.getAttribute('alt');
+    // check for missing alt text
     if (!alt && alt !== '') {
       const issue = {
         issue: `Missing 'alt' Text`,
@@ -16,9 +18,7 @@ function imageAltText(dom) {
         rule: 'IMG_ALT_MISSING',
       };
       imgIssues.push(issue);
-      return {
-
-      };
+      // check for an empty all attribute
     } else if (alt === '') {
       const issue = {
         issue: `Empty 'alt' Text`,
@@ -27,6 +27,7 @@ function imageAltText(dom) {
         rule: 'IMG_ALT_EMPTY',
       };
       imgIssues.push(issue);
+      // verify that the length of the alt attribute is less than 120 characters
     } else if (alt.length > 120) {
       const issue = {
         issue: `Img 'alt' Length`,

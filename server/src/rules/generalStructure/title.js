@@ -1,9 +1,12 @@
 function checkTitle(dom) {
   try {
+    // get the title element
     const titleElement = dom.window.document.title;
     // check if input html has a 'title' attribute and the attribute is not an empty string
     if (titleElement && titleElement.trim() !== '') {
+      // if the title exists and is not an empty string return without issue
       return null;
+      // title is either missing completely or is an empty string
     } else {
       return {
         issue: `Missing Title`,
@@ -12,6 +15,7 @@ function checkTitle(dom) {
         rule: '(DOC_TITLE_MISSING)',
       };
     }
+    // basic error handling
   } catch (error) {
     console.error('Error in checkTitle ', error);
     return {

@@ -4,6 +4,7 @@ function checkForGenericLinkText(dom) {
   const linkElements = dom.window.document.getElementsByTagName('a');
   const genericLinks = [];
   
+  // an array of generic link text
   const genericLinkText = [
     'click here',
     'learn more',
@@ -20,8 +21,11 @@ function checkForGenericLinkText(dom) {
   Array.from(linkElements).forEach((link, index) => {
     // Normalize text: remove newlines, tabs, multiple spaces, and trim
     const text = link.textContent.replace(/\s+/g, ' ').trim();
+
+    // change link text to lowercase for easier comparison
     const linkText = text.toLowerCase();
 
+    // check if the array of generic link text includes the current link text
     if (genericLinkText.includes(linkText)) {
       const problemLink = {
         issue: `Meaningful Link Text`,

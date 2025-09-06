@@ -8,6 +8,7 @@ function checkLanguage(dom) {
 
     // check if the lang attribute is a valid language tag
     const checkValidity = languageTags(langAttribute).valid();
+    // if valid tag return without issue
     if (checkValidity) {
       return null;
     } else {
@@ -18,6 +19,7 @@ function checkLanguage(dom) {
         rule: 'DOC_LANG_INVALID',
       };
     }
+    // if 'lang' attribute does not exist or is an empty string
   } else {
     return {
       issue: `Missing 'lang' Attribute`,
