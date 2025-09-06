@@ -126,16 +126,9 @@ function App() {
         <button onClick={() => clearAndCheck()}>
           Submit
         </button>
-        <button onClick={() => checkCompliance()}>
-          Test Endpoint
-        </button>
-        <button onClick={() => checkAttributes()}>
-          test attributes
-        </button>
       </div>
       <div id='userInputText' ></div>
       <div id='identifiedIssues' ></div>
-      <div style={{ fontSize: '2em' }}>Hello there children!</div>
     </>
   );
 }
